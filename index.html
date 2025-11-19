@@ -212,7 +212,7 @@
       <h2 class="section-title">Tiempos por evento</h2>
       <div class="small">
         Completa HORA INICIO y HORA FIN, el sistema calcula los MINUTOS.  
-        COD_RESEFER se elige de una lista y se completa automáticamente CAT_VOL y DESCRIPCIÓN.  
+        COD_RESEFER se elige de una lista y se completa automáticamente CAT_VOL (categoría) y DESCRIPCIÓN.  
         OBS es opcional.
       </div>
 
@@ -224,10 +224,10 @@
               <th>Hora inicio</th>
               <th>Hora fin</th>
               <th>Minutos</th>
-              <th>Código</th>
-              <th>Categoría</th>
-              <th>Descripción</th>
-              <th>Observación</th>
+              <th>COD_RESEFER</th>
+              <th>CAT_VOL</th>
+              <th>DESCRIPCIÓN</th>
+              <th>OBS</th>
               <th></th>
             </tr>
           </thead>
@@ -250,19 +250,18 @@
   </div>
 
   <script>
-    // 🔹 Tabla de códigos RESEFER -> categoría y descripción
-    // 👉 Reemplaza estos ejemplos por tu tabla real
+    // 🔹 Tabla de códigos RESEFER -> categoría (CAT_VOL) y descripción
     const CODIGOS_RESEFER = [
-      { codigo: "100", descripcion: "Perforación, desatado y sostenimiento", categoria: "TF" },
-      { codigo: "120", descripcion: "Limpieza, acarreo y relleno", categoria: "TF" },
-      { codigo: "140", descripcion: "Servicios (ventilación, bombeo, energía, agua, relleno)", categoria: "TF" },
-      { codigo: "170", descripcion: "Mezcla, mortero y shotcrete", categoria: "TF" },
-      { codigo: "195", descripcion: "Traslados de equipo (general y a labor)", categoria: "TF" },
-      { codigo: "200", descripcion: "Actividades del personal (ingreso, salida, refrigerio, baño)", categoria: "RP" },
-      { codigo: "220", descripcion: "Operaciones rutinarias del operador (chequeos, reportes, lavado)", categoria: "RP" },
-      { codigo: "300", descripcion: "Espera / Stand-by / Falta de frente / problemas operativos", categoria: "RNP" },
-      { codigo: "400", descripcion: "Mantenimiento preventivo, correctivo, diagnóstico", categoria: "TM" },
-      { codigo: "510", descripcion: "Eventos externos / energía / geomecánica / clima", categoria: "TRE" }
+      { codigo: "100", cat_vol: "TF",  descripcion: "Perforación, desatado y sostenimiento" },
+      { codigo: "120", cat_vol: "TF",  descripcion: "Limpieza, acarreo y relleno" },
+      { codigo: "140", cat_vol: "TF",  descripcion: "Servicios (ventilación, bombeo, energía, agua, relleno)" },
+      { codigo: "170", cat_vol: "TF",  descripcion: "Mezcla, mortero y shotcrete" },
+      { codigo: "195", cat_vol: "TF",  descripcion: "Traslados de equipo (general y a labor)" },
+      { codigo: "200", cat_vol: "RP",  descripcion: "Actividades del personal (ingreso, salida, refrigerio, baño)" },
+      { codigo: "220", cat_vol: "RP",  descripcion: "Operaciones rutinarias del operador (chequeos, reportes, lavado)" },
+      { codigo: "300", cat_vol: "RNP", descripcion: "Espera / Stand-by / Falta de frente / problemas operativos" },
+      { codigo: "400", cat_vol: "TM",  descripcion: "Mantenimiento preventivo, correctivo, diagnóstico" },
+      { codigo: "510", cat_vol: "TRE", descripcion: "Eventos externos / energía / geomecánica / clima" }
     ];
 
     const registrosBody = document.getElementById("registros-body");
@@ -280,7 +279,8 @@
       CODIGOS_RESEFER.forEach(item => {
         const opt = document.createElement("option");
         opt.value = item.codigo;
-        opt.textContent = `${item.codigo} - ${item.cat_vol}`;
+        // Se muestra código + descripción
+        opt.textContent = `${item.codigo} - ${item.descripcion}`;
         fragment.appendChild(opt);
       });
       return fragment;
@@ -321,8 +321,8 @@
       const item = CODIGOS_RESEFER.find(c => c.codigo === codigoSeleccionado);
 
       if (item) {
-        catInput.value = item.cat_vol;
-        descInput.value = item.descripcion;
+        catInput.value = item.cat_vol;       // CATEGORIA -> CAT_VOL
+        descInput.value = item.descripcion;  // DESCRIPCIÓN
       } else {
         catInput.value = "";
         descInput.value = "";
