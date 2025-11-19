@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Guardia Operativa</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #020617;
+      border-radius: 16px;
+      padding: 1.5rem 2rem 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border: 1px solid #1f2937;
+    }
+    h1 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      color: #fbbf24;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1rem;
+      margin: 1.2rem 0 0.5rem;
+      color: #e5e7eb;
+    }
+    .grid-header {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem 1rem;
+    }
+    label {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    input, select, textarea, button {
+      font: inherit;
+    }
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.35rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      box-sizing: border-box;
+    }
+    input[readonly] {
+      background: #020617;
+      color: #9ca3af;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+    }
+    thead {
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    th, td {
+      border-bottom: 1px solid #1f2937;
+      padding: 0.3rem 0.4rem;
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) {
+      background: #020617;
+    }
+    .actions {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #111827;
+      font-weight: 600;
+    }
+    .btn-secondary {
+      background: transparent;
+      border-color: #4b5563;
+      color: #e5e7eb;
+    }
+    .btn-danger {
+      background: transparent;
+      border-color: #b91c1c;
+      color: #fecaca;
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
+    .small {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .footer-output {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+    }
+    pre {
+      background: #020617;
+      border-radius: 10px;
+      padding: 0.75rem;
+      border: 1px solid #1f2937;
+      overflow-x: auto;
+      max-height: 220px;
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 1.2rem;
+      }
+      th, td {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Registro de Guardia Operativa</h1>
+    <div class="subtitle">Ingreso de tiempos de equipos de mina — ejemplo base que puedes adaptar a tu operación.</div>
+
+    <!-- DATOS GENERALES -->
+    <h2 class="section-title">Datos de guardia</h2>
+    <form id="form-guardia">
+      <div class="grid-header">
+        <div>
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required />
+        </div>
+        <div>
+          <label for="turno">Turno</label>
+          <select id="turno" name="turno" required>
+            <option value="">Seleccione...</option>
+            <option value="DIA">DÍA</option>
+            <option value="NOCHE">NOCHE</option>
+          </select>
+        </div>
+        <div>
+          <label for="supervisor">Supervisor</label>
+          <input type="text" id="supervisor" name="supervisor" placeholder="Nombre del supervisor" required />
+        </div>
+        <div>
+          <label for="operador">Operador</label>
+          <input type="text" id="operador" name="operador" placeholder="Nombre del operador" required />
+        </div>
+        <div>
+          <label for="zona">Zona / Labor</label>
+          <input type="text" id="zona" name="zona" placeholder="Ej. GA 8510 NW" />
+        </div>
+        <div>
+          <label for="nivel">Nivel</label>
+          <input type="text" id="nivel" name="nivel" placeholder="Ej. 8440" />
+        </div>
+        <div>
+          <label for="equipo">Equipo</label>
+          <input type="text" id="equipo" name="equipo" placeholder="Ej. ST-03, Bolter-02, Mixer-05" />
+        </div>
+      </div>
+
+      <!-- TABLA DE REGISTROS -->
+      <h2 class="section-title">Tiempos por evento</h2>
+      <div class="small">
+        Completa HORA INICIO y HORA FIN, el sistema calcula los MINUTOS.  
+        COD_RESEFER se elige de una lista y se completa automáticamente CAT_VOL y DESCRIPCIÓN.  
+        OBS es opcional.
+      </div>
+
+      <div style="max-height: 320px; overflow: auto; border-radius: 12px; border: 1px solid #1f2937; margin-top: 0.5rem;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Hora inicio</th>
+              <th>Hora fin</th>
+              <th>Minutos</th>
+              <th>COD_RESEFER</th>
+              <th>CAT_VOL</th>
+              <th>DESCRIPCIÓN</th>
+              <th>OBS</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="registros-body">
+            <!-- Filas dinámicas -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-secondary" id="btn-add-row">+ Agregar fila</button>
+        <button type="submit" class="btn btn-primary">Guardar (ver JSON)</button>
+      </div>
+    </form>
+
+    <div class="footer-output">
+      <div class="small">Salida de ejemplo (puedes usarla para revisar o enviarla a una API):</div>
+      <pre id="output-json">{}</pre>
+    </div>
+  </div>
+
+  <script>
+    // 🔹 Tabla de códigos RESEFER -> categoría y descripción
+    // 👉 Reemplaza estos ejemplos por tu tabla real
+    const CODIGOS_RESEFER = [
+      { codigo: "100", cat_vol: "OPERACIÓN NORMAL", descripcion: "Producción / operación continua" },
+      { codigo: "200", cat_vol: "PARADA MECÁNICA", descripcion: "Falla mecánica del equipo" },
+      { codigo: "210", cat_vol: "PARADA ELÉCTRICA", descripcion: "Interrupción de energía eléctrica" },
+      { codigo: "300", cat_vol: "ESPERA OPERATIVA", descripcion: "Espera por instrucción / logística" },
+      { codigo: "400", cat_vol: "TRASLADO", descripcion: "Traslado entre frentes o taller" }
+    ];
+
+    const registrosBody = document.getElementById("registros-body");
+    const btnAddRow = document.getElementById("btn-add-row");
+    const formGuardia = document.getElementById("form-guardia");
+    const outputJson = document.getElementById("output-json");
+
+    function createCodigoOptions() {
+      const fragment = document.createDocumentFragment();
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.textContent = "Seleccione...";
+      fragment.appendChild(emptyOption);
+
+      CODIGOS_RESEFER.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.codigo;
+        opt.textContent = `${item.codigo} - ${item.cat_vol}`;
+        fragment.appendChild(opt);
+      });
+      return fragment;
+    }
+
+    function calcularMinutos(row) {
+      const inicioInput = row.querySelector(".hora-inicio");
+      const finInput = row.querySelector(".hora-fin");
+      const minutosInput = row.querySelector(".minutos");
+
+      const inicio = inicioInput.value;
+      const fin = finInput.value;
+      if (!inicio || !fin) {
+        minutosInput.value = "";
+        return;
+      }
+
+      // Parseamos HH:MM
+      const inicioDate = new Date(`1970-01-01T${inicio}:00`);
+      let finDate = new Date(`1970-01-01T${fin}:00`);
+
+      // Si la hora fin es "menor", asumimos que cruzó medianoche
+      if (finDate < inicioDate) {
+        finDate.setDate(finDate.getDate() + 1);
+      }
+
+      const diffMs = finDate - inicioDate;
+      const diffMin = Math.round(diffMs / 60000);
+      minutosInput.value = diffMin >= 0 ? diffMin : "";
+    }
+
+    function actualizarCategoriaYDescripcion(row) {
+      const selectCodigo = row.querySelector(".cod-resefer");
+      const catInput = row.querySelector(".cat-vol");
+      const descInput = row.querySelector(".descripcion");
+
+      const codigoSeleccionado = selectCodigo.value;
+      const item = CODIGOS_RESEFER.find(c => c.codigo === codigoSeleccionado);
+
+      if (item) {
+        catInput.value = item.cat_vol;
+        descInput.value = item.descripcion;
+      } else {
+        catInput.value = "";
+        descInput.value = "";
+      }
+    }
+
+    function actualizarNumeracion() {
+      Array.from(registrosBody.children).forEach((row, index) => {
+        const cellIndex = row.querySelector(".row-index");
+        if (cellIndex) {
+          cellIndex.textContent = index + 1;
+        }
+      });
+    }
+
+    function crearFila() {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td class="row-index"></td>
+        <td>
+          <input type="time" class="hora-inicio" />
+        </td>
+        <td>
+          <input type="time" class="hora-fin" />
+        </td>
+        <td>
+          <input type="number" class="minutos" readonly />
+        </td>
+        <td>
+          <select class="cod-resefer"></select>
+        </td>
+        <td>
+          <input type="text" class="cat-vol" readonly />
+        </td>
+        <td>
+          <input type="text" class="descripcion" readonly />
+        </td>
+        <td>
+          <input type="text" class="obs" placeholder="Observación (opcional)" />
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger btn-remove-row">✕</button>
+        </td>
+      `;
+
+      // Llenar el combo de códigos
+      const selectCodigo = row.querySelector(".cod-resefer");
+      selectCodigo.appendChild(createCodigoOptions());
+
+      // Eventos para actualizar minutos
+      row.querySelector(".hora-inicio").addEventListener("change", () => calcularMinutos(row));
+      row.querySelector(".hora-fin").addEventListener("change", () => calcularMinutos(row));
+
+      // Evento para actualizar CAT_VOL y DESCRIPCIÓN
+      selectCodigo.addEventListener("change", () => actualizarCategoriaYDescripcion(row));
+
+      // Evento para eliminar fila
+      row.querySelector(".btn-remove-row").addEventListener("click", () => {
+        registrosBody.removeChild(row);
+        actualizarNumeracion();
+      });
+
+      registrosBody.appendChild(row);
+      actualizarNumeracion();
+    }
+
+    // Agregar primera fila por defecto
+    crearFila();
+
+    btnAddRow.addEventListener("click", () => {
+      crearFila();
+    });
+
+    formGuardia.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const datosGuardia = {
+        fecha: document.getElementById("fecha").value,
+        turno: document.getElementById("turno").value,
+        supervisor: document.getElementById("supervisor").value,
+        operador: document.getElementById("operador").value,
+        zona: document.getElementById("zona").value,
+        nivel: document.getElementById("nivel").value,
+        equipo: document.getElementById("equipo").value
+      };
+
+      const registros = Array.from(registrosBody.children).map(row => ({
+        hora_inicio: row.querySelector(".hora-inicio").value || null,
+        hora_fin: row.querySelector(".hora-fin").value || null,
+        minutos: row.querySelector(".minutos").value ? Number(row.querySelector(".minutos").value) : null,
+        cod_resefer: row.querySelector(".cod-resefer").value || null,
+        cat_vol: row.querySelector(".cat-vol").value || null,
+        descripcion: row.querySelector(".descripcion").value || null,
+        observacion: row.querySelector(".obs").value || null
+      })).filter(r => r.hora_inicio || r.hora_fin || r.cod_resefer || r.observacion);
+
+      const payload = {
+        guardia: datosGuardia,
+        registros
+      };
+
+      outputJson.textContent = JSON.stringify(payload, null, 2);
+      // Aquí podrías hacer un fetch() a tu backend si luego quieres guardarlo en BD:
+      // fetch('/api/guardar-guardia', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+    });
+  </script>
+</body>
+</html>
