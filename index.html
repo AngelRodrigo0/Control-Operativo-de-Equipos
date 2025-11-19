@@ -224,10 +224,10 @@
               <th>Hora inicio</th>
               <th>Hora fin</th>
               <th>Minutos</th>
-              <th>COD_RESEFER</th>
-              <th>CAT_VOL</th>
-              <th>DESCRIPCIÓN</th>
-              <th>OBS</th>
+              <th>Código</th>
+              <th>Categoría</th>
+              <th>Descripción</th>
+              <th>Observación</th>
               <th></th>
             </tr>
           </thead>
@@ -253,11 +253,16 @@
     // 🔹 Tabla de códigos RESEFER -> categoría y descripción
     // 👉 Reemplaza estos ejemplos por tu tabla real
     const CODIGOS_RESEFER = [
-      { codigo: "100", cat_vol: "OPERACIÓN NORMAL", descripcion: "Producción / operación continua" },
-      { codigo: "200", cat_vol: "PARADA MECÁNICA", descripcion: "Falla mecánica del equipo" },
-      { codigo: "210", cat_vol: "PARADA ELÉCTRICA", descripcion: "Interrupción de energía eléctrica" },
-      { codigo: "300", cat_vol: "ESPERA OPERATIVA", descripcion: "Espera por instrucción / logística" },
-      { codigo: "400", cat_vol: "TRASLADO", descripcion: "Traslado entre frentes o taller" }
+      { codigo: "100", descripcion: "Perforación, desatado y sostenimiento", categoria: "TF" },
+      { codigo: "120", descripcion: "Limpieza, acarreo y relleno", categoria: "TF" },
+      { codigo: "140", descripcion: "Servicios (ventilación, bombeo, energía, agua, relleno)", categoria: "TF" },
+      { codigo: "170", descripcion: "Mezcla, mortero y shotcrete", categoria: "TF" },
+      { codigo: "195", descripcion: "Traslados de equipo (general y a labor)", categoria: "TF" },
+      { codigo: "200", descripcion: "Actividades del personal (ingreso, salida, refrigerio, baño)", categoria: "RP" },
+      { codigo: "220", descripcion: "Operaciones rutinarias del operador (chequeos, reportes, lavado)", categoria: "RP" },
+      { codigo: "300", descripcion: "Espera / Stand-by / Falta de frente / problemas operativos", categoria: "RNP" },
+      { codigo: "400", descripcion: "Mantenimiento preventivo, correctivo, diagnóstico", categoria: "TM" },
+      { codigo: "510", descripcion: "Eventos externos / energía / geomecánica / clima", categoria: "TRE" }
     ];
 
     const registrosBody = document.getElementById("registros-body");
